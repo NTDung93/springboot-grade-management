@@ -12,7 +12,7 @@ public class SubjectDto {
     private Long id;
 
     @NotEmpty
-    @Size(min = 3, message = "Subject name should have at least 3 characters")
+    @Size(min = 1, message = "Subject name should have at least 1 character")
     private String name;
 
     private Set<Grade> grades;

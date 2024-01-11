@@ -15,13 +15,13 @@ import java.util.Set;
 public class StudentDto {
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "Name should not be empty!")
     private String name;
 
-    @Pattern(regexp="(^$|[0-9]{10,11})", message = "Phone number must be 10 or 11 digits")
+    @Pattern(regexp="(^$|[0-9]{10,11})", message = "Phone number must be 10 or 11 digits!")
     private String phone;
 
-    @Email(regexp = ".+@.+\\..+", message = "Email is invalid")
+    @Email(regexp = ".+@.+\\..+", message = "Email is invalid!")
     private String email;
 
     private Set<Grade> grades;
