@@ -96,6 +96,7 @@ public class GradeServiceImpl implements GradeService {
         }
         if (student != null && subject != null && grade != null) {
             grade.setGrade(gradeDto.getGrade());
+            gradeRepository.save(grade);
             return mapper.map(grade, GradeDto.class);
         }
         return null;

@@ -1,7 +1,6 @@
 package ntd.springboot.grademanagement.controller;
 
 import jakarta.validation.Valid;
-import ntd.springboot.grademanagement.model.payload.StudentResponse;
 import ntd.springboot.grademanagement.model.payload.SubjectDto;
 import ntd.springboot.grademanagement.model.payload.SubjectResponse;
 import ntd.springboot.grademanagement.service.SubjectService;
@@ -9,6 +8,7 @@ import ntd.springboot.grademanagement.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +23,9 @@ public class SubjectController {
         this.subjectService = subjectService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<SubjectDto> createSubject(@Valid @RequestBody SubjectDto subjectDto){
+    public ResponseEntity<SubjectDto> createSubject(@Valid @RequestBody SubjectDto subjectDto) {
         return new ResponseEntity<>(subjectService.createSubject(subjectDto), HttpStatus.CREATED);
     }
 
@@ -39,23 +40,25 @@ public class SubjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SubjectDto> getSubjectById(@PathVariable Long id){
+    public ResponseEntity<SubjectDto> getSubjectById(@PathVariable Long id) {
         return ResponseEntity.ok(subjectService.getSubjectById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<SubjectDto> updateSubject(@Valid @RequestBody SubjectDto subjectDto, @PathVariable Long id){
+    public ResponseEntity<SubjectDto> updateSubject(@Valid @RequestBody SubjectDto subjectDto, @PathVariable Long id) {
         return ResponseEntity.ok(subjectService.updateSubject(subjectDto, id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSubject(@PathVariable Long id){
+    public ResponseEntity<String> deleteSubject(@PathVariable Long id) {
         subjectService.deleteSubject(id);
         return ResponseEntity.ok("Delete subject successfully");
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<SubjectDto>> searchSubject(@RequestParam(name = "searchVal") String keyword){
+    public ResponseEntity<List<SubjectDto>> searchSubject(@RequestParam(name = "searchVal") String keyword) {
         return ResponseEntity.ok(subjectService.searchSubject(keyword));
     }
 }

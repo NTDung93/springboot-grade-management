@@ -8,6 +8,7 @@ import ntd.springboot.grademanagement.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudents(pageNo, pageSize, sortBy, sortDir));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<StudentDto> addStudent(@Valid @RequestBody StudentDto studentDto) {
         return new ResponseEntity<>(studentService.createStudent(studentDto), HttpStatus.CREATED);
@@ -42,11 +44,13 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentById(studentId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<StudentDto> updateStudent(@Valid @RequestBody StudentDto studentDto, @PathVariable(name = "id") Long studentId) {
         return ResponseEntity.ok(studentService.updateStudent(studentDto, studentId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable(name = "id") Long studentId) {
         studentService.deleteStudent(studentId);

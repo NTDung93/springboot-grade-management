@@ -24,5 +24,5 @@ public class StudentDto {
     @Email(regexp = ".+@.+\\..+", message = "Email is invalid!")
     private String email;
 
-    private Set<Grade> grades;
+//    private Set<Grade> grades;
 }

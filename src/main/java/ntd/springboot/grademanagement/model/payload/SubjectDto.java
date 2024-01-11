@@ -15,5 +15,5 @@ public class SubjectDto {
     @Size(min = 1, message = "Subject name should have at least 1 character")
     private String name;
 
-    private Set<Grade> grades;
+//    private Set<Grade> grades;
 }

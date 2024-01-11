@@ -3,11 +3,11 @@ package ntd.springboot.grademanagement.controller;
 import jakarta.validation.Valid;
 import ntd.springboot.grademanagement.model.payload.GradeDto;
 import ntd.springboot.grademanagement.model.payload.GradeResponse;
-import ntd.springboot.grademanagement.model.payload.StudentResponse;
 import ntd.springboot.grademanagement.service.GradeService;
 import ntd.springboot.grademanagement.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +22,7 @@ public class GradeController {
         this.gradeService = gradeService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<GradeDto> addGrade(@Valid @RequestBody GradeDto gradeDto) {
         return ResponseEntity.ok(gradeService.addGrade(gradeDto));
@@ -42,11 +43,13 @@ public class GradeController {
         return ResponseEntity.ok(gradeService.getGradeById(studentId, subjectId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{studentId}/{subjectId}")
     public ResponseEntity<GradeDto> updateGrade(@Valid @RequestBody GradeDto gradeDto, @PathVariable(name = "studentId") Long studentId, @PathVariable(name = "subjectId") Long subjectId) {
         return ResponseEntity.ok(gradeService.updateGrade(gradeDto, studentId, subjectId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{studentId}/{subjectId}")
     public ResponseEntity<String> deleteGrade(@PathVariable(name = "studentId") Long studentId, @PathVariable(name = "subjectId") Long subjectId) {
         gradeService.deleteGrade(studentId, subjectId);
