@@ -15,21 +15,19 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "grades")
 public class Grade {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private GradeKey id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    @MapsId("studentId")
+    @JoinColumn(name = "student_id")
+    Student student;
 
     @ManyToOne
-    @JoinColumn(name = "subject_id", nullable = false)
-    private Subject subject;
+    @MapsId("subjectId")
+    @JoinColumn(name = "subject_id")
+    Subject subject;
 
     @Column(nullable = false)
     private Float grade;
-
-    @Column(nullable = false)
-    private LocalDate date;
 }
