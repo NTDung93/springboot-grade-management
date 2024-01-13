@@ -38,19 +38,19 @@ public class GradeController {
         return ResponseEntity.ok(gradeService.getAllGrades(pageNo, pageSize, sortBy, sortDir));
     }
 
-    @GetMapping("/{studentId}/{subjectId}")
+    @GetMapping("student/{studentId}/subject/{subjectId}")
     public ResponseEntity<GradeDto> getGradeById(@PathVariable(name = "studentId") Long studentId, @PathVariable(name = "subjectId") Long subjectId) {
         return ResponseEntity.ok(gradeService.getGradeById(studentId, subjectId));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{studentId}/{subjectId}")
+    @PutMapping("student/{studentId}/subject/{subjectId}")
     public ResponseEntity<GradeDto> updateGrade(@Valid @RequestBody GradeDto gradeDto, @PathVariable(name = "studentId") Long studentId, @PathVariable(name = "subjectId") Long subjectId) {
         return ResponseEntity.ok(gradeService.updateGrade(gradeDto, studentId, subjectId));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{studentId}/{subjectId}")
+    @DeleteMapping("student/{studentId}/subject/{subjectId}")
     public ResponseEntity<String> deleteGrade(@PathVariable(name = "studentId") Long studentId, @PathVariable(name = "subjectId") Long subjectId) {
         gradeService.deleteGrade(studentId, subjectId);
         return ResponseEntity.ok("Delete grade successfully!");
